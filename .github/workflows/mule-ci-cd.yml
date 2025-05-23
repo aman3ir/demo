@@ -30,13 +30,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package -DskipTests
 
-      - name: Stamp artifact with commit hash
-        run: |
-          artifact=$(ls target/*.jar | head -1)
-          commitHash=$(git rev-parse --short "$GITHUB_SHA")
-          renamedArtifact=$(echo "$artifact" | sed "s/.jar/-$commitHash.jar/")
-          mv "$artifact" "$renamedArtifact"
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -58,19 +51,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: mule-artifact
-          path: .
-
       - name: Deploy to CloudHub
         run: |
-          artifact=$(ls *.jar | head -1)
-          mvn deploy -DskipTests -DmuleDeploy \
-            -Dmule.artifact="$artifact" \
+          mvn mule:deploy -DskipTests \
             -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
             -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
-            -Denv="${{ secrets.DEPLOY_ENV }}" \
-            -Danypoint.platform.client_id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-            -Danypoint.platform.client_secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+            -Denv="${{ secrets.DEPLOY_ENV }}"

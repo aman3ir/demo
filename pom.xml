@@ -86,11 +86,6 @@
             <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
         </repository>
-        <repository>
-            <id>cloudera.repo</id>
-            <name>Cloudera Repository</name>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
