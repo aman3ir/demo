@@ -10,11 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout this repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-
-      - name: Cache dependencies
+      - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
@@ -31,12 +30,12 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package -DskipTests
 
-      - name: Stamp artifact file name with commit hash
+      - name: Stamp artifact with commit hash
         run: |
-          artifactName1=$(ls target/*.jar | head -1)
+          artifact=$(ls target/*.jar | head -1)
           commitHash=$(git rev-parse --short "$GITHUB_SHA")
-          artifactName2=$(echo "$artifactName1" | sed "s/.jar/-$commitHash.jar/")
-          mv "$artifactName1" "$artifactName2"
+          renamedArtifact=$(echo "$artifact" | sed "s/.jar/-$commitHash.jar/")
+          mv "$artifact" "$renamedArtifact"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -48,11 +47,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout this repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-    
-      - name: Cache dependencies
+      - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
@@ -68,11 +66,11 @@ jobs:
 
       - name: Deploy to CloudHub
         run: |
-          artifactName=$(ls *.jar | head -1)
+          artifact=$(ls *.jar | head -1)
           mvn deploy -DskipTests -DmuleDeploy \
-            -Dmule.artifact="$artifactName" \
+            -Dmule.artifact="$artifact" \
             -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
             -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
-            -Denvironment="${{ secrets.DEPLOY_ENV }}" \
+            -Denv="${{ secrets.DEPLOY_ENV }}" \
             -Danypoint.platform.client_id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
             -Danypoint.platform.client_secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
