@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+        http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+
+    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d3c90894-c0c5-418a-bece-89d7cd8228da">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+
+    <vm:config name="VM_Config" doc:name="VM Config" doc:id="53b271c1-e69d-49ff-a050-5ba9b02b247d">
+        <vm:connection/>
+        <vm:queues>
+            <vm:queue queueName="test"/>
+        </vm:queues>
+    </vm:config>
+
+    <flow name="demo-vmFlow" doc:id="cf123408-e3e3-4b9e-82e7-1d5dbe5c98a4">
+        <scheduler doc:name="Scheduler" doc:id="6c36db58-d1da-40b1-ad6d-c20afabfc8be" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="HOURS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="14d69474-931d-43b4-b46c-afc906f24d4a" message="start"/>
+
+        <set-payload value="#[[3 , 4,'5','6',&quot;a&quot;,&quot;b&quot;,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,2,5,6,7,8,1,2,3,4,5,6,7,8]]" doc:name="Set Payload" doc:id="9482c569-3432-405f-84ad-c18a171ce3a3"/>
+
+        <batch:job jobName="demo-vmBatch_Job" doc:id="37550a90-a444-4118-a6a0-6eed014e39ae" blockSize="20" maxFailedRecords="-1">
+            <batch:process-records>
+                <batch:step name="Batch_Step" doc:id="fe123701-1fb4-4680-9817-8f59b3bb2505">
+                    <batch:aggregator doc:name="Batch Aggregator" doc:id="63c7dc71-d46d-498f-83d3-d0990726ba29" size="5">
+                        <try doc:name="Try" doc:id="6e19b92a-0b13-4030-be14-ef058f2dadd2" >
+							<ee:transform doc:name="Transform Message" doc:id="f2639146-ff78-4cbd-b4df-89bf9df0d036">
+                            <ee:message>
+                                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map (item) -> (item) /5
+]]></ee:set-payload>
+                            </ee:message>
+                        </ee:transform>
+							<error-handler >
+								<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="a90ee37c-182a-47d5-9a9c-0bb17743adab" />
+							</error-handler>
+						</try>
+						<logger level="INFO" doc:name="Logger" doc:id="2324e91b-9a8e-41c0-9e91-11124513ab6f" message="batch step size of data #[payload]" />
+                    </batch:aggregator>
+                </batch:step>
+
+                <batch:step name="Batch_Step1" doc:id="58a2abf0-2bee-42d9-bf02-75e8eb4b0f7f" acceptPolicy="ONLY_FAILURES">
+                    <batch:aggregator doc:name="Batch Aggregator" doc:id="dec9bb44-2634-4d80-8138-ef8906895667" size="5">
+                        <try doc:name="Try" doc:id="6d6c5044-1474-44b8-862c-e1e5d2f1f9f9" >
+							<ee:transform doc:name="Transform Message" doc:id="75bc7a3d-c912-4bf9-bb7a-c1cdbea9c82f">
+                            <ee:message>
+                                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map (item) -> (item as Number)
+]]></ee:set-payload>
+                            </ee:message>
+                        </ee:transform>
+							<error-handler >
+								<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="80806495-4c3f-4520-8a76-0b7102ac3460" />
+							</error-handler>
+						</try>
+						<logger level="INFO" doc:name="Logger" doc:id="c0038c71-db52-483b-84b3-8b86c4ba12a8" message="batch step 1 size of data #[payload]" />
+                    </batch:aggregator>
+                </batch:step>
+
+                <batch:step name="Batch_Step2" doc:id="b86e6ba9-8c16-4b97-b147-2b6dcfeb94ef" acceptPolicy="ONLY_FAILURES">
+                    <batch:aggregator doc:name="Batch Aggregator" doc:id="74476a77-a27f-4f69-86c9-720e687198e3" size="5">
+                        <logger level="INFO" doc:name="Logger" doc:id="6bfb73c6-f9de-4482-8adb-375a7023fe39" message="batch step 2 size of data #[payload]"/>
+                        <!-- [STUDIO:"Transform Message"]<ee:transform doc:name="Transform Message" doc:id="f0d6a7d6-2d17-4fa2-b659-4450f6d53416">
+                            <ee:message>
+                                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+&#45;&#45;-
+payload map (item) -> (item as Number) /5
+&#93;&#93;></ee:set-payload>
+                            </ee:message>
+                        </ee:transform> [STUDIO] -->
+                    </batch:aggregator>
+                </batch:step>
+            </batch:process-records>
+
+            <batch:on-complete>
+                <logger level="INFO" doc:name="Logger" doc:id="76a27c15-4d58-4460-a7f8-bd8b1b82dd82" message="some one"/>
+            </batch:on-complete>
+        </batch:job>
+
+        <logger level="INFO" doc:name="Logger" doc:id="30c87fc0-dba3-443c-b176-58ac4471a17b" message="ended"/>
+    </flow>
+
+</mule>
