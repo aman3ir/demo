@@ -51,6 +51,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mule-artifact
+          path: target  # ensure artifact goes to where Mule plugin expects it
+
+      - name: List downloaded artifacts
+        run: ls -lh target/
+
       - name: Deploy to CloudHub
         run: |
           mvn mule:deploy -DskipTests \
