@@ -47,8 +47,8 @@
                         <deploymentSettings>
                             <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
                         </deploymentSettings>
-                        <connectedAppClientId>${env.MULE_CLIENT_ID}</connectedAppClientId>
-                        <connectedAppClientSecret>${env.MULE_CLIENT_SECRET}</connectedAppClientSecret>
+                        <connectedAppClientId>bc2d044192bd4efba8ea9d0e2eeef7c4</connectedAppClientId>
+                        <connectedAppClientSecret>2bd5C9F3942b4d038Be15Dde5e19Bd5F</connectedAppClientSecret>
                     </cloudhub2Deployment>
                 </configuration>
             </plugin>
