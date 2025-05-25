@@ -55,6 +55,7 @@
                 <groupId>org.mule.tools.maven</groupId>
                 <artifactId>exchange-mule-maven-plugin</artifactId>
                 <version>0.0.23</version>
+                <extensions>true</extensions>
                 <executions>
                     <execution>
                         <goals>
