@@ -5,7 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>4ae02668-aabc-4fc0-812b-c1447e8bf2d1</groupId>
+    <!-- Use your Anypoint Organization ID here -->
+    <groupId>YOUR_ORG_ID</groupId>
     <artifactId>demo-vm</artifactId>
     <version>1.0.0</version>
     <packaging>mule-application</packaging>
@@ -34,24 +35,21 @@
                 <extensions>true</extensions>
                 <configuration>
                     <classifier>mule-application</classifier>
-                   <cloudhub2Deployment>
-    <uri>https://anypoint.mulesoft.com</uri>
-    <provider>MC</provider>
-    <environment>ThreeIrelandTestBed</environment>
-    <target>Cloudhub-Test-EU-West-1</target>
-    <connectedApp>
-        <clientId>bc2d044192bd4efba8ea9d0e2eeef7c4</clientId>
-        <clientSecret>2bd5C9F3942b4d038Be15Dde5e19Bd5F</clientSecret>
-    </connectedApp>
-    <applicationName>${project.artifactId}</applicationName>
-    <releaseChannel>Edge</releaseChannel>
-    <replicas>1</replicas>
-    <vCores>0.1</vCores>
-    <deploymentSettings>
-        <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
-    </deploymentSettings>
-</cloudhub2Deployment>
-                   
+                    <cloudhub2Deployment>
+                        <uri>https://anypoint.mulesoft.com</uri>
+                        <provider>MC</provider>
+                        <environment>ThreeIrelandTestBed</environment>
+                        <target>Cloudhub-Test-EU-West-1</target>
+                        <server>Repository</server>  <!-- Must match your settings.xml server id -->
+                        <applicationName>${project.artifactId}</applicationName>
+                        <releaseChannel>Edge</releaseChannel>
+                        <replicas>1</replicas>
+                        <vCores>0.1</vCores>
+                        <deploymentSettings>
+                            <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
+                        </deploymentSettings>
+                        <!-- Remove connectedAppClientId and connectedAppClientSecret here -->
+                    </cloudhub2Deployment>
                 </configuration>
             </plugin>
 
@@ -107,7 +105,7 @@
         <repository>
             <id>Repository</id>
             <name>Private Exchange repository</name>
-            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/YOUR_ORG_ID/maven</url>
         </repository>
     </repositories>
 
@@ -123,7 +121,7 @@
         <repository>
             <id>Repository</id>
             <name>Corporate Repository</name>
-            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/YOUR_ORG_ID/maven</url>
         </repository>
     </distributionManagement>
 </project>
