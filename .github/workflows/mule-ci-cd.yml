@@ -36,6 +36,7 @@ jobs:
           <settings>
             <pluginGroups>
               <pluginGroup>org.mule.tools</pluginGroup>
+              <pluginGroup>org.mule.tools.maven</pluginGroup>
             </pluginGroups>
             <servers>
               <server>
@@ -56,7 +57,7 @@ jobs:
         run: mvn clean package -DskipMunitTests
 
       - name: Publish to Exchange
-        run: mvn exchange:exchange-deploy -DskipMunitTests
+        run: mvn org.mule.tools.maven:exchange-mule-maven-plugin:0.0.23:exchange-deploy -DskipMunitTests
 
       - name: Deploy to CloudHub 2.0
         run: mvn deploy -DskipMunitTests -DmuleDeploy

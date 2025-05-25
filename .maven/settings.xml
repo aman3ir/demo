@@ -1,7 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <settings>
   <pluginGroups>
     <pluginGroup>org.mule.tools</pluginGroup>
+    <pluginGroup>org.mule.tools.maven</pluginGroup>
   </pluginGroups>
 
   <servers>
