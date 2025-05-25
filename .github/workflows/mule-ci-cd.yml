@@ -32,12 +32,31 @@ jobs:
       - name: Create Maven settings.xml
         run: |
           mkdir -p ~/.m2
-          cp .maven/settings.xml ~/.m2/settings.xml
+          cat > ~/.m2/settings.xml <<EOF
+          <settings>
+            <pluginGroups>
+              <pluginGroup>org.mule.tools</pluginGroup>
+            </pluginGroups>
+            <servers>
+              <server>
+                <id>Repository</id>
+                <username>${MULE_CLIENT_ID}</username>
+                <password>${MULE_CLIENT_SECRET}</password>
+              </server>
+              <server>
+                <id>anypoint-exchange</id>
+                <username>${MULE_CLIENT_ID}</username>
+                <password>${MULE_CLIENT_SECRET}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+
+      - name: Build Mule Application
+        run: mvn clean package -DskipMunitTests
 
       - name: Publish to Exchange
-        run: |
-          mvn deploy -DskipMunitTests
+        run: mvn exchange:exchange-deploy -DskipMunitTests
 
       - name: Deploy to CloudHub 2.0
-        run: |
-          mvn deploy -DskipMunitTests -DmuleDeploy
+        run: mvn deploy -DskipMunitTests -DmuleDeploy

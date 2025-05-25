@@ -10,5 +10,10 @@
       <username>${env.MULE_CLIENT_ID}</username>
       <password>${env.MULE_CLIENT_SECRET}</password>
     </server>
+    <server>
+      <id>anypoint-exchange</id>
+      <username>${env.MULE_CLIENT_ID}</username>
+      <password>${env.MULE_CLIENT_SECRET}</password>
+    </server>
   </servers>
 </settings>
