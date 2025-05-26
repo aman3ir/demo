@@ -57,6 +57,7 @@ jobs:
         run: mvn org.mule.tools.maven:exchange-mule-maven-plugin:0.0.23:exchange-deploy -DskipMunitTests
 
       - name: Deploy to CloudHub 2.0
-        run: mvn deploy -DskipMunitTests -DmuleDeploy \
-  -Danypoint.username = bc2d044192bd4efba8ea9d0e2eeef7c4 \
-  -Danypoint.password = 2bd5C9F3942b4d038Be15Dde5e19Bd5F
+        run: >
+          mvn deploy -DskipMunitTests -DmuleDeploy
+          -Danypoint.username=bc2d044192bd4efba8ea9d0e2eeef7c4
+          -Danypoint.password=2bd5C9F3942b4d038Be15Dde5e19Bd5F
