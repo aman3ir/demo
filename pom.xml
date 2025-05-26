@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Use your Anypoint Organization ID here -->
-    <groupId>YOUR_ORG_ID</groupId>
+    <groupId>4ae02668-aabc-4fc0-812b-c1447e8bf2d1</groupId>
     <artifactId>demo-vm</artifactId>
     <version>1.0.0</version>
     <packaging>mule-application</packaging>
