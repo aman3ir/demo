@@ -10,14 +10,14 @@
   <servers>
     <server>
       <id>anypoint-exchange</id>
-      <username>bc2d044192bd4efba8ea9d0e2eeef7c4</username>       <!-- Your Connected App Client ID -->
-      <password>2bd5C9F3942b4d038Be15Dde5e19Bd5F</password>       <!-- Your Connected App Client Secret -->
+      <username>cb967acbde4e45b4a019b0bba7cd055a</username>       <!-- Your Connected App Client ID -->
+      <password>D1411F082eBD49e8807f1593Ed8FC62B</password>       <!-- Your Connected App Client Secret -->
     </server>
 
     <server>
       <id>Repository</id>
-      <username>bc2d044192bd4efba8ea9d0e2eeef7c4</username>       <!-- Same Client ID here -->
-      <password>2bd5C9F3942b4d038Be15Dde5e19Bd5F</password>       <!-- Same Client Secret here -->
+      <username>cb967acbde4e45b4a019b0bba7cd055a</username>       <!-- Same Client ID here -->
+      <password>D1411F082eBD49e8807f1593Ed8FC62B</password>       <!-- Same Client Secret here -->
     </server>
   </servers>
 

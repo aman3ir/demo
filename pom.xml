@@ -96,16 +96,19 @@
             <id>anypoint-exchange-v3</id>
             <name>Anypoint Exchange</name>
             <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+            <layout>default</layout>
         </repository>
         <repository>
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
         </repository>
         <repository>
             <id>Repository</id>
             <name>Private Exchange repository</name>
             <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/4ae02668-aabc-4fc0-812b-c1447e8bf2d1/maven</url>
+            <layout>default</layout>
         </repository>
     </repositories>
 
