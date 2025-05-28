@@ -50,14 +50,11 @@ jobs:
           EOF
         shell: bash
 
-      - name: Build Mule Application
-        run: mvn clean package -DskipMunitTests
-
       - name: Publish to Exchange
-        run: mvn org.mule.tools.maven:exchange-mule-maven-plugin:0.0.23:exchange-deploy -DskipMunitTests
+        run: mvn clean deploy
 
       - name: Deploy to CloudHub 2.0
         run: >
-          mvn deploy -DskipMunitTests -DmuleDeploy
+          mvn clean deploy -DmuleDeploy
           -Danypoint.username=cb967acbde4e45b4a019b0bba7cd055a
           -Danypoint.password=D1411F082eBD49e8807f1593Ed8FC62B
