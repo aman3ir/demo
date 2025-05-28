@@ -25,36 +25,14 @@ jobs:
           distribution: zulu
           java-version: 8
 
-      - name: Create Maven settings.xml with direct credentials
-        run: |
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml <<EOF
-          <settings>
-            <pluginGroups>
-              <pluginGroup>org.mule.tools</pluginGroup>
-              <pluginGroup>org.mule.tools.maven</pluginGroup>
-            </pluginGroups>
-            <servers>
-              <server>
-                <id>Repository</id>
-                <username>cb967acbde4e45b4a019b0bba7cd055a</username>         <!-- Replace here -->
-                <password>D1411F082eBD49e8807f1593Ed8FC62B</password>     <!-- Replace here -->
-              </server>
-              <server>
-                <id>anypoint-exchange</id>
-                <username>cb967acbde4e45b4a019b0bba7cd055a</username>         <!-- Replace here -->
-                <password>D1411F082eBD49e8807f1593Ed8FC62B</password>     <!-- Replace here -->
-              </server>
-            </servers>
-          </settings>
-          EOF
-        shell: bash
-
       - name: Publish to Exchange
-        run: mvn clean deploy
+        run: >
+          mvn clean deploy --settings .maven/settings.xml
+          -Danypoint.username=cb967acbde4e45b4a019b0bba7cd055a
+          -Danypoint.password=D1411F082eBD49e8807f1593Ed8FC62B
 
       - name: Deploy to CloudHub 2.0
         run: >
-          mvn clean deploy -DmuleDeploy
+          mvn clean deploy -DmuleDeploy --settings .maven/settings.xml
           -Danypoint.username=cb967acbde4e45b4a019b0bba7cd055a
           -Danypoint.password=D1411F082eBD49e8807f1593Ed8FC62B
