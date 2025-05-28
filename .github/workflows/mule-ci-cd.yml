@@ -28,11 +28,8 @@ jobs:
       - name: Publish to Exchange
         run: >
           mvn clean deploy --settings .maven/settings.xml
-          -Danypoint.username=cb967acbde4e45b4a019b0bba7cd055a
-          -Danypoint.password=D1411F082eBD49e8807f1593Ed8FC62B
 
       - name: Deploy to CloudHub 2.0
         run: >
           mvn clean deploy -DmuleDeploy --settings .maven/settings.xml
-          -Danypoint.username=cb967acbde4e45b4a019b0bba7cd055a
-          -Danypoint.password=D1411F082eBD49e8807f1593Ed8FC62B
+
