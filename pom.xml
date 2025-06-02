@@ -49,7 +49,7 @@
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
-						<environment>ThreeIrelandTestBed</environment>
+						<environment>ThreeIrelandLightning</environment>
 						<target>Cloudhub-US-East-2</target>
 						<muleVersion>4.9.5</muleVersion>
 						<server>connectedapp</server>
