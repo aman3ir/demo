@@ -5,7 +5,7 @@
  
 	<modelVersion>4.0.0</modelVersion>
  
-	<groupId>aa6f8212-c55c-4380-aeea-34a9cbd35b5b</groupId>
+	<groupId>4ae02668-aabc-4fc0-812b-c1447e8bf2d1</groupId>
 	<artifactId>maven-demo-1</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
@@ -49,7 +49,7 @@
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
-						<environment>Sandbox</environment>
+						<environment>ThreeIrelandTestBed</environment>
 						<target>Cloudhub-US-East-2</target>
 						<muleVersion>4.9.5</muleVersion>
 						<server>connectedapp</server>
